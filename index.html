@@ -1,0 +1,1165 @@
+<!doctype html>
+<html lang="tr"><head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<title>Mythfront — 42 Komutan Seslendirme Seçkisi</title>
+<style>
+  * { box-sizing:border-box; }
+  body { background:#0f1116; color:#e9ecf2; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif; margin:0; padding:18px 16px 80px; }
+  .wrap { max-width:1380px; margin:0 auto; }
+  .hero { display:flex; justify-content:space-between; align-items:flex-start; gap:14px; flex-wrap:wrap; margin-bottom:14px; }
+  h1 { margin:0 0 6px; font-size:22px; color:#f2c96d; }
+  .sub { color:#9aa4b5; font-size:13.5px; line-height:1.45; max-width:820px; }
+  .actions { display:flex; gap:8px; flex-wrap:wrap; }
+  .abtn { background:#222836; color:#f2c96d; border:1px solid #d9a44177; border-radius:10px; padding:10px 14px; cursor:pointer; font-size:13px; font-weight:700; }
+  .abtn.primary { background:#d9a441; color:#111318; border-color:#d9a441; }
+  .tabs { display:flex; gap:7px; overflow-x:auto; padding-bottom:8px; margin-bottom:16px; -webkit-overflow-scrolling:touch; }
+  .tab { background:#1a1f29; color:#cfd6e4; border:1px solid #2b3344; border-radius:999px; padding:8px 14px; cursor:pointer; font-size:13px; font-weight:600; white-space:nowrap; }
+  .tab.active { background:#d9a441; color:#111318; border-color:#d9a441; }
+  .grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(min(100%, 410px), 1fr)); gap:14px; }
+  .card { background:#171b23; border:1px solid #262d3d; border-radius:14px; padding:14px; display:flex; flex-direction:column; gap:8px; transition:border-color .15s; }
+  .card.playing { border-color:#f2c96d; box-shadow:0 0 0 1px #f2c96d55; }
+  .top { display:flex; gap:12px; align-items:center; }
+  .port { width:68px; height:68px; border-radius:50%; object-fit:cover; border:2px solid #d9a44188; flex-shrink:0; background:#0d0f14; }
+  h3 { margin:4px 0 2px; font-size:16.5px; color:#fff; }
+  .cid { color:#7c869a; font-weight:500; font-size:13px; }
+  .row1 { display:flex; gap:5px; flex-wrap:wrap; align-items:center; }
+  .badge, .pill { font-size:10.5px; padding:2px 7px; border-radius:999px; font-weight:600; }
+  .pill { background:#222836; color:#b8c2d4; }
+  .pill.hz { background:#193229; color:#6ee7b7; }
+  .actor { font-size:12px; color:#95a0b4; }
+  .quote { font-size:14.5px; font-weight:600; color:#f6dba0; background:#11141b; padding:9px 11px; border-radius:8px; border-left:3px solid #d9a441; line-height:1.4; }
+  .phon { font-size:12px; color:#a9b4c7; }
+  .tr { font-size:13px; color:#dce3ef; line-height:1.35; }
+  audio { width:100%; height:40px; margin-top:2px; }
+  .fb-row { display:flex; gap:6px; align-items:center; margin-top:2px; }
+  .vbtn { background:#1f2532; color:#c8d0e0; border:1px solid #2e3648; border-radius:8px; padding:7px 10px; font-size:12px; font-weight:600; cursor:pointer; flex-shrink:0; }
+  .vbtn.ok.on { background:#183a2c; color:#6ee7b7; border-color:#34d399; }
+  .vbtn.rev.on { background:#3d1f24; color:#fca5a5; border-color:#f87171; }
+  .note { flex:1; min-width:0; background:#11141b; color:#e9ecf2; border:1px solid #283042; border-radius:8px; padding:7px 9px; font-size:13px; }
+  .toast { position:fixed; bottom:20px; left:50%; transform:translateX(-50%); background:#d9a441; color:#111318; font-weight:700; padding:10px 18px; border-radius:999px; font-size:13px; display:none; z-index:99; box-shadow:0 6px 24px #0009; }
+</style></head><body>
+<div class="wrap">
+  <div class="hero">
+    <div>
+      <h1>Mythfront — 42 Komutan Ses Vitrini</h1>
+      <div class="sub">Her komutan kendi tarihsel ulus dilinde ve karakterine özel farklı bir ses aktörüyle seslendirildi. Dinleyip kartların altından <b>👍 Oldu / 🔄 Değişsin</b> seçebilir ve sağ üstten yorumları tek tuşla kopyalayabilirsin.</div>
+    </div>
+    <div class="actions">
+      <button class="abtn" id="seqBtn" onclick="toggleSeq()">▶ Sırayla Çal</button>
+      <button class="abtn primary" onclick="copyFeedback()">📋 Yorumları Kopyala</button>
+    </div>
+  </div>
+  <div class="tabs">
+    <button class="tab active" onclick="filt('all',this)">Tümü (42)</button>
+    <button class="tab" onclick="filt('osm',this)">Osmanlı (7)</button>
+    <button class="tab" onclick="filt('bati',this)">Batı · Yunan/Roma (7)</button>
+    <button class="tab" onclick="filt('kuzey',this)">Viking · Eski Norsça (7)</button>
+    <button class="tab" onclick="filt('mogol',this)">Moğol (7)</button>
+    <button class="tab" onclick="filt('misir',this)">Antik Mısır (7)</button>
+    <button class="tab" onclick="filt('arap',this)">Arap (7)</button>
+  </div>
+  <div class="grid">
+    <div class="card" data-nat="osm" data-id="4101" data-name="Fatih Sultan Mehmed">
+      <div class="top">
+        <img src="portre/4101_fatih_sultan_mehmed.webp" loading="lazy" class="port" alt="Fatih Sultan Mehmed"/>
+        <div class="meta">
+          <div class="row1">
+            <span class="badge" style="background:#e6a93822;color:#e6a938;border:1px solid #e6a93855">EFSANE</span>
+            <span class="pill">Osmanlı</span>
+            <span class="pill">Erkek · Stratejist</span>
+            <span class="pill hz">97 Hz · 6.4 sn</span>
+          </div>
+          <h3>#1 · Fatih Sultan Mehmed <span class="cid">(4101)</span></h3>
+          <div class="actor">Ses: <b>Cavit Pancar</b> · Silah: <b>Fatih'in Strateji Kitabı</b></div>
+        </div>
+      </div>
+      <div class="quote">Cahiller kazanmak için savaşır. Bilgeler ise... savaşmadan kazanır.</div>
+      <div class="phon">Okunuş: <i>Cahiller kazanmak için savaşır. Bilgeler ise... savaşmadan kazanır.</i></div>
+      <div class="tr">Türkçe: “Cahiller kazanmak için savaşır. Bilgeler ise savaşmadan kazanır.”</div>
+      <audio controls preload="none" playsinline src="ses/4101_fatih_sultan_mehmed.mp3" data-idx="0"></audio>
+      <div class="fb-row">
+        <button class="vbtn ok" onclick="vote(4101, 'iyi', this)">👍 Oldu</button>
+        <button class="vbtn rev" onclick="vote(4101, 'degissin', this)">🔄 Değişsin</button>
+        <input class="note" type="text" placeholder="Kısa yorum yaz..." oninput="saveNote(4101, this.value)" id="note-4101"/>
+      </div>
+    </div>
+    <div class="card" data-nat="osm" data-id="4102" data-name="Kanuni Sultan Süleyman">
+      <div class="top">
+        <img src="portre/4102_kanuni_sultan_suleyman.webp" loading="lazy" class="port" alt="Kanuni Sultan Süleyman"/>
+        <div class="meta">
+          <div class="row1">
+            <span class="badge" style="background:#a86bf222;color:#a86bf2;border:1px solid #a86bf255">DESTANSI</span>
+            <span class="pill">Osmanlı</span>
+            <span class="pill">Erkek · Lider</span>
+            <span class="pill hz">101 Hz · 5.7 sn</span>
+          </div>
+          <h3>#2 · Kanuni Sultan Süleyman <span class="cid">(4102)</span></h3>
+          <div class="actor">Ses: <b>Sinan</b> · Silah: <b>Mohaç Kılıcı</b></div>
+        </div>
+      </div>
+      <div class="quote">Kılıç fetih açar; lâkin mülkü ayakta tutan yalnız adâlettir.</div>
+      <div class="phon">Okunuş: <i>Kılıç fetih açar; lâkin mülkü ayakta tutan yalnız adâlettir.</i></div>
+      <div class="tr">Türkçe: “Kılıç fetih açar; fakat devleti ayakta tutan yalnızca adalettir.”</div>
+      <audio controls preload="none" playsinline src="ses/4102_kanuni_sultan_suleyman.mp3" data-idx="1"></audio>
+      <div class="fb-row">
+        <button class="vbtn ok" onclick="vote(4102, 'iyi', this)">👍 Oldu</button>
+        <button class="vbtn rev" onclick="vote(4102, 'degissin', this)">🔄 Değişsin</button>
+        <input class="note" type="text" placeholder="Kısa yorum yaz..." oninput="saveNote(4102, this.value)" id="note-4102"/>
+      </div>
+    </div>
+    <div class="card" data-nat="osm" data-id="4103" data-name="Yavuz Sultan Selim">
+      <div class="top">
+        <img src="portre/4103_yavuz_sultan_selim.webp" loading="lazy" class="port" alt="Yavuz Sultan Selim"/>
+        <div class="meta">
+          <div class="row1">
+            <span class="badge" style="background:#e6a93822;color:#e6a938;border:1px solid #e6a93855">EFSANE</span>
+            <span class="pill">Osmanlı</span>
+            <span class="pill">Erkek · Lider</span>
+            <span class="pill hz">137 Hz · 5.6 sn</span>
+          </div>
+          <h3>#3 · Yavuz Sultan Selim <span class="cid">(4103)</span></h3>
+          <div class="actor">Ses: <b>Fatih Yıldırım</b> · Silah: <b>Ridaniye Kılıcı</b></div>
+        </div>
+      </div>
+      <div class="quote">Cihân iki hükümdâra dar gelir; gayret bizden, zafer mukadderdir.</div>
+      <div class="phon">Okunuş: <i>Cihân iki hükümdâra dar gelir; gayret bizden, zafer mukadderdir.</i></div>
+      <div class="tr">Türkçe: “Dünya iki hükümdara dar gelir; gayret bizden, zafer mukadderdir.”</div>
+      <audio controls preload="none" playsinline src="ses/4103_yavuz_sultan_selim.mp3" data-idx="2"></audio>
+      <div class="fb-row">
+        <button class="vbtn ok" onclick="vote(4103, 'iyi', this)">👍 Oldu</button>
+        <button class="vbtn rev" onclick="vote(4103, 'degissin', this)">🔄 Değişsin</button>
+        <input class="note" type="text" placeholder="Kısa yorum yaz..." oninput="saveNote(4103, this.value)" id="note-4103"/>
+      </div>
+    </div>
+    <div class="card" data-nat="osm" data-id="4104" data-name="IV. Murad">
+      <div class="top">
+        <img src="portre/4104_iv_murad.webp" loading="lazy" class="port" alt="IV. Murad"/>
+        <div class="meta">
+          <div class="row1">
+            <span class="badge" style="background:#a86bf222;color:#a86bf2;border:1px solid #a86bf255">DESTANSI</span>
+            <span class="pill">Osmanlı</span>
+            <span class="pill">Erkek · Savaşçı</span>
+            <span class="pill hz">121 Hz · 5.8 sn</span>
+          </div>
+          <h3>#4 · IV. Murad <span class="cid">(4104)</span></h3>
+          <div class="actor">Ses: <b>Emre Timur</b> · Silah: <b>Bağdat Gürzü</b></div>
+        </div>
+      </div>
+      <div class="quote">Nizâm bozulursa surlar çöker; irâde demirden ağır gerek.</div>
+      <div class="phon">Okunuş: <i>Nizâm bozulursa surlar çöker; irâde demirden ağır gerek.</i></div>
+      <div class="tr">Türkçe: “Nizam bozulursa surlar çöker; irade demirden ağır olmalıdır.”</div>
+      <audio controls preload="none" playsinline src="ses/4104_iv_murad.mp3" data-idx="3"></audio>
+      <div class="fb-row">
+        <button class="vbtn ok" onclick="vote(4104, 'iyi', this)">👍 Oldu</button>
+        <button class="vbtn rev" onclick="vote(4104, 'degissin', this)">🔄 Değişsin</button>
+        <input class="note" type="text" placeholder="Kısa yorum yaz..." oninput="saveNote(4104, this.value)" id="note-4104"/>
+      </div>
+    </div>
+    <div class="card" data-nat="osm" data-id="4105" data-name="Ertuğrul Bey">
+      <div class="top">
+        <img src="portre/4105_ertugrul_bey.webp" loading="lazy" class="port" alt="Ertuğrul Bey"/>
+        <div class="meta">
+          <div class="row1">
+            <span class="badge" style="background:#a86bf222;color:#a86bf2;border:1px solid #a86bf255">DESTANSI</span>
+            <span class="pill">Osmanlı</span>
+            <span class="pill">Erkek · Destek</span>
+            <span class="pill hz">113 Hz · 5.4 sn</span>
+          </div>
+          <h3>#5 · Ertuğrul Bey <span class="cid">(4105)</span></h3>
+          <div class="actor">Ses: <b>Nazmi Cem</b> · Silah: <b>Söğüt Mızrağı</b></div>
+        </div>
+      </div>
+      <div class="quote">Kökümüz törede, gözümüz ufuktadır; yurt alınmaz, yoğrulur.</div>
+      <div class="phon">Okunuş: <i>Kökümüz törede, gözümüz ufuktadır; yurt alınmaz, yoğrulur.</i></div>
+      <div class="tr">Türkçe: “Kökümüz törede, gözümüz ufuktadır; yurt yalnız kılıçla alınmaz, emekle yoğrulur.”</div>
+      <audio controls preload="none" playsinline src="ses/4105_ertugrul_bey.mp3" data-idx="4"></audio>
+      <div class="fb-row">
+        <button class="vbtn ok" onclick="vote(4105, 'iyi', this)">👍 Oldu</button>
+        <button class="vbtn rev" onclick="vote(4105, 'degissin', this)">🔄 Değişsin</button>
+        <input class="note" type="text" placeholder="Kısa yorum yaz..." oninput="saveNote(4105, this.value)" id="note-4105"/>
+      </div>
+    </div>
+    <div class="card" data-nat="osm" data-id="4106" data-name="Süleyman Paşa">
+      <div class="top">
+        <img src="portre/4106_suleyman_pasa.webp" loading="lazy" class="port" alt="Süleyman Paşa"/>
+        <div class="meta">
+          <div class="row1">
+            <span class="badge" style="background:#4ea1f522;color:#4ea1f5;border:1px solid #4ea1f555">NADİR</span>
+            <span class="pill">Osmanlı</span>
+            <span class="pill">Erkek · Savaşçı</span>
+            <span class="pill hz">117 Hz · 5.2 sn</span>
+          </div>
+          <h3>#6 · Süleyman Paşa <span class="cid">(4106)</span></h3>
+          <div class="actor">Ses: <b>Kerem</b> · Silah: <b>Çimpe Mızrağı</b></div>
+        </div>
+      </div>
+      <div class="quote">Su yol kesmez, yürek yol açar; karşı kıyı cesûrun vatanıdır.</div>
+      <div class="phon">Okunuş: <i>Su yol kesmez, yürek yol açar; karşı kıyı cesûrun vatanıdır.</i></div>
+      <div class="tr">Türkçe: “Su yolu kesmez, yürek yol açar; karşı kıyı cesurların vatanıdır.”</div>
+      <audio controls preload="none" playsinline src="ses/4106_suleyman_pasa.mp3" data-idx="5"></audio>
+      <div class="fb-row">
+        <button class="vbtn ok" onclick="vote(4106, 'iyi', this)">👍 Oldu</button>
+        <button class="vbtn rev" onclick="vote(4106, 'degissin', this)">🔄 Değişsin</button>
+        <input class="note" type="text" placeholder="Kısa yorum yaz..." oninput="saveNote(4106, this.value)" id="note-4106"/>
+      </div>
+    </div>
+    <div class="card" data-nat="osm" data-id="4107" data-name="Turgut Alp">
+      <div class="top">
+        <img src="portre/4107_turgut_alp.webp" loading="lazy" class="port" alt="Turgut Alp"/>
+        <div class="meta">
+          <div class="row1">
+            <span class="badge" style="background:#4ea1f522;color:#4ea1f5;border:1px solid #4ea1f555">NADİR</span>
+            <span class="pill">Osmanlı</span>
+            <span class="pill">Erkek · Savaşçı</span>
+            <span class="pill hz">138 Hz · 3.9 sn</span>
+          </div>
+          <h3>#7 · Turgut Alp <span class="cid">(4107)</span></h3>
+          <div class="actor">Ses: <b>Emin</b> · Silah: <b>Turgut Gürzü</b></div>
+        </div>
+      </div>
+      <div class="quote">Yiğidin süsü altını değil, cephede dönmeyen sözüdür.</div>
+      <div class="phon">Okunuş: <i>Yiğidin süsü altını değil, cephede dönmeyen sözüdür.</i></div>
+      <div class="tr">Türkçe: “Yiğidin süsü altını değil, cephede dönmeyen sözüdür.”</div>
+      <audio controls preload="none" playsinline src="ses/4107_turgut_alp.mp3" data-idx="6"></audio>
+      <div class="fb-row">
+        <button class="vbtn ok" onclick="vote(4107, 'iyi', this)">👍 Oldu</button>
+        <button class="vbtn rev" onclick="vote(4107, 'degissin', this)">🔄 Değişsin</button>
+        <input class="note" type="text" placeholder="Kısa yorum yaz..." oninput="saveNote(4107, this.value)" id="note-4107"/>
+      </div>
+    </div>
+    <div class="card" data-nat="bati" data-id="4201" data-name="Athena">
+      <div class="top">
+        <img src="portre/4201_athena.webp" loading="lazy" class="port" alt="Athena"/>
+        <div class="meta">
+          <div class="row1">
+            <span class="badge" style="background:#e6a93822;color:#e6a938;border:1px solid #e6a93855">EFSANE</span>
+            <span class="pill">Batı (Yunan & Roma)</span>
+            <span class="pill">Kadın · Stratejist</span>
+            <span class="pill hz">162 Hz · 4.2 sn</span>
+          </div>
+          <h3>#8 · Athena <span class="cid">(4201)</span></h3>
+          <div class="actor">Ses: <b>Zeynep</b> · Silah: <b>Aigis</b></div>
+        </div>
+      </div>
+      <div class="quote">Ἡ μὲν ῥώμη μάχεται, ἡ δὲ μῆτις νικᾷ.</div>
+      <div class="phon">Okunuş: <i>Hê men rhômê makhetai, hê de mêtis nikâ.</i></div>
+      <div class="tr">Türkçe: “Kaba kuvvet çarpışır; zaferi ise bilgelik ve strateji kazanır.”</div>
+      <audio controls preload="none" playsinline src="ses/4201_athena.mp3" data-idx="7"></audio>
+      <div class="fb-row">
+        <button class="vbtn ok" onclick="vote(4201, 'iyi', this)">👍 Oldu</button>
+        <button class="vbtn rev" onclick="vote(4201, 'degissin', this)">🔄 Değişsin</button>
+        <input class="note" type="text" placeholder="Kısa yorum yaz..." oninput="saveNote(4201, this.value)" id="note-4201"/>
+      </div>
+    </div>
+    <div class="card" data-nat="bati" data-id="4202" data-name="Akhilleus">
+      <div class="top">
+        <img src="portre/4202_akhilleus.webp" loading="lazy" class="port" alt="Akhilleus"/>
+        <div class="meta">
+          <div class="row1">
+            <span class="badge" style="background:#e6a93822;color:#e6a938;border:1px solid #e6a93855">EFSANE</span>
+            <span class="pill">Batı (Yunan & Roma)</span>
+            <span class="pill">Erkek · Savaşçı</span>
+            <span class="pill hz">198 Hz · 3.8 sn</span>
+          </div>
+          <h3>#9 · Akhilleus <span class="cid">(4202)</span></h3>
+          <div class="actor">Ses: <b>Charlie</b> · Silah: <b>Pelion Mızrağı</b></div>
+        </div>
+      </div>
+      <div class="quote">Βραχὺς ὁ βίος, ἀθάνατον δὲ τὸ κλέος.</div>
+      <div class="phon">Okunuş: <i>Brakhys ho bios, athanaton de to kleos.</i></div>
+      <div class="tr">Türkçe: “Ömür kısadır; lâkin kazanılan şan ölümsüzdür.”</div>
+      <audio controls preload="none" playsinline src="ses/4202_akhilleus.mp3" data-idx="8"></audio>
+      <div class="fb-row">
+        <button class="vbtn ok" onclick="vote(4202, 'iyi', this)">👍 Oldu</button>
+        <button class="vbtn rev" onclick="vote(4202, 'degissin', this)">🔄 Değişsin</button>
+        <input class="note" type="text" placeholder="Kısa yorum yaz..." oninput="saveNote(4202, this.value)" id="note-4202"/>
+      </div>
+    </div>
+    <div class="card" data-nat="bati" data-id="4203" data-name="Odysseus">
+      <div class="top">
+        <img src="portre/4203_odysseus.webp" loading="lazy" class="port" alt="Odysseus"/>
+        <div class="meta">
+          <div class="row1">
+            <span class="badge" style="background:#a86bf222;color:#a86bf2;border:1px solid #a86bf255">DESTANSI</span>
+            <span class="pill">Batı (Yunan & Roma)</span>
+            <span class="pill">Erkek · Stratejist</span>
+            <span class="pill hz">119 Hz · 5.2 sn</span>
+          </div>
+          <h3>#10 · Odysseus <span class="cid">(4203)</span></h3>
+          <div class="actor">Ses: <b>Guilherme</b> · Silah: <b>Eurytos'un Yayı</b></div>
+        </div>
+      </div>
+      <div class="quote">Τέτλαθι δή, κραδίη· δόλῳ καὶ τλημοσύνῃ πᾶν τελεῖται.</div>
+      <div class="phon">Okunuş: <i>Tetlathi dê, kradiê; dolô kai tlêmosynê pan teleitai.</i></div>
+      <div class="tr">Türkçe: “Dayan ey yüreğim; akıl ve sabırla her engel aşılır.”</div>
+      <audio controls preload="none" playsinline src="ses/4203_odysseus.mp3" data-idx="9"></audio>
+      <div class="fb-row">
+        <button class="vbtn ok" onclick="vote(4203, 'iyi', this)">👍 Oldu</button>
+        <button class="vbtn rev" onclick="vote(4203, 'degissin', this)">🔄 Değişsin</button>
+        <input class="note" type="text" placeholder="Kısa yorum yaz..." oninput="saveNote(4203, this.value)" id="note-4203"/>
+      </div>
+    </div>
+    <div class="card" data-nat="bati" data-id="4204" data-name="Leonidas">
+      <div class="top">
+        <img src="portre/4204_leonidas.webp" loading="lazy" class="port" alt="Leonidas"/>
+        <div class="meta">
+          <div class="row1">
+            <span class="badge" style="background:#a86bf222;color:#a86bf2;border:1px solid #a86bf255">DESTANSI</span>
+            <span class="pill">Batı (Yunan & Roma)</span>
+            <span class="pill">Erkek · Savaşçı</span>
+            <span class="pill hz">115 Hz · 4.1 sn</span>
+          </div>
+          <h3>#11 · Leonidas <span class="cid">(4204)</span></h3>
+          <div class="actor">Ses: <b>Charlee</b> · Silah: <b>Thermopylai Kalkanı</b></div>
+        </div>
+      </div>
+      <div class="quote">Ἢ τὰν ἢ ἐπὶ τᾶς· ἐλεύθεροι γὰρ ἕσταμες.</div>
+      <div class="phon">Okunuş: <i>Ê tan ê epi tas; eleutheroi gar hestames.</i></div>
+      <div class="tr">Türkçe: “Ya bu kalkanla ya bu kalkanın üstünde; çünkü biz özgür dururuz.”</div>
+      <audio controls preload="none" playsinline src="ses/4204_leonidas.mp3" data-idx="10"></audio>
+      <div class="fb-row">
+        <button class="vbtn ok" onclick="vote(4204, 'iyi', this)">👍 Oldu</button>
+        <button class="vbtn rev" onclick="vote(4204, 'degissin', this)">🔄 Değişsin</button>
+        <input class="note" type="text" placeholder="Kısa yorum yaz..." oninput="saveNote(4204, this.value)" id="note-4204"/>
+      </div>
+    </div>
+    <div class="card" data-nat="bati" data-id="4205" data-name="Aeneas">
+      <div class="top">
+        <img src="portre/4205_aeneas.webp" loading="lazy" class="port" alt="Aeneas"/>
+        <div class="meta">
+          <div class="row1">
+            <span class="badge" style="background:#a86bf222;color:#a86bf2;border:1px solid #a86bf255">DESTANSI</span>
+            <span class="pill">Batı (Yunan & Roma)</span>
+            <span class="pill">Erkek · Lider</span>
+            <span class="pill hz">134 Hz · 4.2 sn</span>
+          </div>
+          <h3>#12 · Aeneas <span class="cid">(4205)</span></h3>
+          <div class="actor">Ses: <b>Daniel UK</b> · Silah: <b>Vulcanus'un Kalkanı</b></div>
+        </div>
+      </div>
+      <div class="quote">Tu ne cede malis, sed contra audentior ito.</div>
+      <div class="phon">Okunuş: <i>Tu ne kede malis, sed kontra audentior ito.</i></div>
+      <div class="tr">Türkçe: “Felaketlere boyun eğme; bilakis üstlerine daha cesurca yürü.”</div>
+      <audio controls preload="none" playsinline src="ses/4205_aeneas.mp3" data-idx="11"></audio>
+      <div class="fb-row">
+        <button class="vbtn ok" onclick="vote(4205, 'iyi', this)">👍 Oldu</button>
+        <button class="vbtn rev" onclick="vote(4205, 'degissin', this)">🔄 Değişsin</button>
+        <input class="note" type="text" placeholder="Kısa yorum yaz..." oninput="saveNote(4205, this.value)" id="note-4205"/>
+      </div>
+    </div>
+    <div class="card" data-nat="bati" data-id="4206" data-name="Atalanta">
+      <div class="top">
+        <img src="portre/4206_atalanta.webp" loading="lazy" class="port" alt="Atalanta"/>
+        <div class="meta">
+          <div class="row1">
+            <span class="badge" style="background:#4ea1f522;color:#4ea1f5;border:1px solid #4ea1f555">NADİR</span>
+            <span class="pill">Batı (Yunan & Roma)</span>
+            <span class="pill">Kadın · Savaşçı</span>
+            <span class="pill hz">222 Hz · 3.2 sn</span>
+          </div>
+          <h3>#13 · Atalanta <span class="cid">(4206)</span></h3>
+          <div class="actor">Ses: <b>Dilek Nur</b> · Silah: <b>Kalydon Yayı</b></div>
+        </div>
+      </div>
+      <div class="quote">Ἄνεμον φθάνω, καὶ οὐδὲν θήραμα ἐκφεύγει.</div>
+      <div class="phon">Okunuş: <i>Anemon phthanô, kai ouden thêrama ekpheugei.</i></div>
+      <div class="tr">Türkçe: “Rüzgârı bile geride bırakırım; hiçbir av gözümden kaçamaz.”</div>
+      <audio controls preload="none" playsinline src="ses/4206_atalanta.mp3" data-idx="12"></audio>
+      <div class="fb-row">
+        <button class="vbtn ok" onclick="vote(4206, 'iyi', this)">👍 Oldu</button>
+        <button class="vbtn rev" onclick="vote(4206, 'degissin', this)">🔄 Değişsin</button>
+        <input class="note" type="text" placeholder="Kısa yorum yaz..." oninput="saveNote(4206, this.value)" id="note-4206"/>
+      </div>
+    </div>
+    <div class="card" data-nat="bati" data-id="4207" data-name="Horatius Kokles">
+      <div class="top">
+        <img src="portre/4207_horatius_kokles.webp" loading="lazy" class="port" alt="Horatius Kokles"/>
+        <div class="meta">
+          <div class="row1">
+            <span class="badge" style="background:#4ea1f522;color:#4ea1f5;border:1px solid #4ea1f555">NADİR</span>
+            <span class="pill">Batı (Yunan & Roma)</span>
+            <span class="pill">Erkek · Dengeli</span>
+            <span class="pill hz">174 Hz · 4.2 sn</span>
+          </div>
+          <h3>#14 · Horatius Kokles <span class="cid">(4207)</span></h3>
+          <div class="actor">Ses: <b>Adam</b> · Silah: <b>Sublicius Kalkanı</b></div>
+        </div>
+      </div>
+      <div class="quote">Unus vir pontem tenet, dum patria post tergum stat!</div>
+      <div class="phon">Okunuş: <i>Unus vir pontem tenet, dum patria post tergum stat!</i></div>
+      <div class="tr">Türkçe: “Arkasında vatan durdukça, tek bir er bile köprüyü tutar!”</div>
+      <audio controls preload="none" playsinline src="ses/4207_horatius_kokles.mp3" data-idx="13"></audio>
+      <div class="fb-row">
+        <button class="vbtn ok" onclick="vote(4207, 'iyi', this)">👍 Oldu</button>
+        <button class="vbtn rev" onclick="vote(4207, 'degissin', this)">🔄 Değişsin</button>
+        <input class="note" type="text" placeholder="Kısa yorum yaz..." oninput="saveNote(4207, this.value)" id="note-4207"/>
+      </div>
+    </div>
+    <div class="card" data-nat="kuzey" data-id="4301" data-name="Odin">
+      <div class="top">
+        <img src="portre/4301_odin.webp" loading="lazy" class="port" alt="Odin"/>
+        <div class="meta">
+          <div class="row1">
+            <span class="badge" style="background:#e6a93822;color:#e6a938;border:1px solid #e6a93855">EFSANE</span>
+            <span class="pill">Viking (Eski Norsça)</span>
+            <span class="pill">Erkek · Stratejist</span>
+            <span class="pill hz">97 Hz · 5.8 sn</span>
+          </div>
+          <h3>#15 · Odin <span class="cid">(4301)</span></h3>
+          <div class="actor">Ses: <b>Callum</b> · Silah: <b>Gungnir</b></div>
+        </div>
+      </div>
+      <div class="quote">Deyr fé, deyja frændr; en orðstírr deyr aldregi.</div>
+      <div class="phon">Okunuş: <i>Deyr fe, deyya frendr; en ordstirr deyr aldregi.</i></div>
+      <div class="tr">Türkçe: “Sürüler ölür, akrabalar ölür; fakat kazanılan iyi nam asla ölmez.”</div>
+      <audio controls preload="none" playsinline src="ses/4301_odin.mp3" data-idx="14"></audio>
+      <div class="fb-row">
+        <button class="vbtn ok" onclick="vote(4301, 'iyi', this)">👍 Oldu</button>
+        <button class="vbtn rev" onclick="vote(4301, 'degissin', this)">🔄 Değişsin</button>
+        <input class="note" type="text" placeholder="Kısa yorum yaz..." oninput="saveNote(4301, this.value)" id="note-4301"/>
+      </div>
+    </div>
+    <div class="card" data-nat="kuzey" data-id="4302" data-name="Sigurd">
+      <div class="top">
+        <img src="portre/4302_sigurd.webp" loading="lazy" class="port" alt="Sigurd"/>
+        <div class="meta">
+          <div class="row1">
+            <span class="badge" style="background:#e6a93822;color:#e6a938;border:1px solid #e6a93855">EFSANE</span>
+            <span class="pill">Viking (Eski Norsça)</span>
+            <span class="pill">Erkek · Savaşçı</span>
+            <span class="pill hz">134 Hz · 4.6 sn</span>
+          </div>
+          <h3>#16 · Sigurd <span class="cid">(4302)</span></h3>
+          <div class="actor">Ses: <b>Yusuf Suratlı</b> · Silah: <b>Gram</b></div>
+        </div>
+      </div>
+      <div class="quote">Hugr er betri en sverðs megin, hvars reiðir skulu berjask.</div>
+      <div class="phon">Okunuş: <i>Hugr er betri en sverds megin, hvars reidir skulu beryask.</i></div>
+      <div class="tr">Türkçe: “Cesur yürek, öfkeli erler çarpıştığında kılıcın gücünden bile üstündür.”</div>
+      <audio controls preload="none" playsinline src="ses/4302_sigurd.mp3" data-idx="15"></audio>
+      <div class="fb-row">
+        <button class="vbtn ok" onclick="vote(4302, 'iyi', this)">👍 Oldu</button>
+        <button class="vbtn rev" onclick="vote(4302, 'degissin', this)">🔄 Değişsin</button>
+        <input class="note" type="text" placeholder="Kısa yorum yaz..." oninput="saveNote(4302, this.value)" id="note-4302"/>
+      </div>
+    </div>
+    <div class="card" data-nat="kuzey" data-id="4303" data-name="Beowulf">
+      <div class="top">
+        <img src="portre/4303_beowulf.webp" loading="lazy" class="port" alt="Beowulf"/>
+        <div class="meta">
+          <div class="row1">
+            <span class="badge" style="background:#a86bf222;color:#a86bf2;border:1px solid #a86bf255">DESTANSI</span>
+            <span class="pill">Viking (Eski Norsça)</span>
+            <span class="pill">Erkek · Dengeli</span>
+            <span class="pill hz">147 Hz · 4.7 sn</span>
+          </div>
+          <h3>#17 · Beowulf <span class="cid">(4303)</span></h3>
+          <div class="actor">Ses: <b>Brian</b> · Silah: <b>Nægling</b></div>
+        </div>
+      </div>
+      <div class="quote">Urðr bergir oft ófúsum jarli, er hugr hans dugir!</div>
+      <div class="phon">Okunuş: <i>Urdr bergir oft ofusum yarli, er hugr hans dugir!</i></div>
+      <div class="tr">Türkçe: “Kader, yüreği sarsılmayan yiğidi çoğu kez korur!”</div>
+      <audio controls preload="none" playsinline src="ses/4303_beowulf.mp3" data-idx="16"></audio>
+      <div class="fb-row">
+        <button class="vbtn ok" onclick="vote(4303, 'iyi', this)">👍 Oldu</button>
+        <button class="vbtn rev" onclick="vote(4303, 'degissin', this)">🔄 Değişsin</button>
+        <input class="note" type="text" placeholder="Kısa yorum yaz..." oninput="saveNote(4303, this.value)" id="note-4303"/>
+      </div>
+    </div>
+    <div class="card" data-nat="kuzey" data-id="4304" data-name="Brynhild">
+      <div class="top">
+        <img src="portre/4304_brynhild.webp" loading="lazy" class="port" alt="Brynhild"/>
+        <div class="meta">
+          <div class="row1">
+            <span class="badge" style="background:#a86bf222;color:#a86bf2;border:1px solid #a86bf255">DESTANSI</span>
+            <span class="pill">Viking (Eski Norsça)</span>
+            <span class="pill">Kadın · Stratejist</span>
+            <span class="pill hz">208 Hz · 4.8 sn</span>
+          </div>
+          <h3>#18 · Brynhild <span class="cid">(4304)</span></h3>
+          <div class="actor">Ses: <b>Matilda</b> · Silah: <b>Hindarfjall Mızrağı</b></div>
+        </div>
+      </div>
+      <div class="quote">Sigdrífu rúnar kenni ek þeim er óhræddir ganga í eld.</div>
+      <div class="phon">Okunuş: <i>Sigdrivu runar kenni ek theim er ohreddir ganga i eld.</i></div>
+      <div class="tr">Türkçe: “Zafer rünlerini, yalnızca ateşe korkusuzca yürüyenlere öğretirim.”</div>
+      <audio controls preload="none" playsinline src="ses/4304_brynhild.mp3" data-idx="17"></audio>
+      <div class="fb-row">
+        <button class="vbtn ok" onclick="vote(4304, 'iyi', this)">👍 Oldu</button>
+        <button class="vbtn rev" onclick="vote(4304, 'degissin', this)">🔄 Değişsin</button>
+        <input class="note" type="text" placeholder="Kısa yorum yaz..." oninput="saveNote(4304, this.value)" id="note-4304"/>
+      </div>
+    </div>
+    <div class="card" data-nat="kuzey" data-id="4305" data-name="Ragnar Lodbrok">
+      <div class="top">
+        <img src="portre/4305_ragnar_lodbrok.webp" loading="lazy" class="port" alt="Ragnar Lodbrok"/>
+        <div class="meta">
+          <div class="row1">
+            <span class="badge" style="background:#a86bf222;color:#a86bf2;border:1px solid #a86bf255">DESTANSI</span>
+            <span class="pill">Viking (Eski Norsça)</span>
+            <span class="pill">Erkek · Lider</span>
+            <span class="pill hz">127 Hz · 4.9 sn</span>
+          </div>
+          <h3>#19 · Ragnar Lodbrok <span class="cid">(4305)</span></h3>
+          <div class="actor">Ses: <b>Roger</b> · Silah: <b>Akın Baltası</b></div>
+        </div>
+      </div>
+      <div class="quote">Haf er vegur okkar; djarfum manni opnast hver strönd.</div>
+      <div class="phon">Okunuş: <i>Hav er vegur okkar; dyarvum manni opnast hver strönd.</i></div>
+      <div class="tr">Türkçe: “Deniz bizim yolumuzdur; cüretkâr olana her kıyı açılır.”</div>
+      <audio controls preload="none" playsinline src="ses/4305_ragnar_lodbrok.mp3" data-idx="18"></audio>
+      <div class="fb-row">
+        <button class="vbtn ok" onclick="vote(4305, 'iyi', this)">👍 Oldu</button>
+        <button class="vbtn rev" onclick="vote(4305, 'degissin', this)">🔄 Değişsin</button>
+        <input class="note" type="text" placeholder="Kısa yorum yaz..." oninput="saveNote(4305, this.value)" id="note-4305"/>
+      </div>
+    </div>
+    <div class="card" data-nat="kuzey" data-id="4306" data-name="Lagertha">
+      <div class="top">
+        <img src="portre/4306_lagertha.webp" loading="lazy" class="port" alt="Lagertha"/>
+        <div class="meta">
+          <div class="row1">
+            <span class="badge" style="background:#4ea1f522;color:#4ea1f5;border:1px solid #4ea1f555">NADİR</span>
+            <span class="pill">Viking (Eski Norsça)</span>
+            <span class="pill">Kadın · Savaşçı</span>
+            <span class="pill hz">250 Hz · 5.4 sn</span>
+          </div>
+          <h3>#20 · Lagertha <span class="cid">(4306)</span></h3>
+          <div class="actor">Ses: <b>Sarah</b> · Silah: <b>Ladgerda'nın Kalkanı</b></div>
+        </div>
+      </div>
+      <div class="quote">Skjöldr minn verndar fólk mitt; enginn stormr brýtr fylking vára.</div>
+      <div class="phon">Okunuş: <i>Skyöldr minn verndar folk mitt; enginn stormr britr filking vara.</i></div>
+      <div class="tr">Türkçe: “Kalkanım halkımı korur; hiçbir fırtına bizim kalkan duvarımızı kıramaz.”</div>
+      <audio controls preload="none" playsinline src="ses/4306_lagertha.mp3" data-idx="19"></audio>
+      <div class="fb-row">
+        <button class="vbtn ok" onclick="vote(4306, 'iyi', this)">👍 Oldu</button>
+        <button class="vbtn rev" onclick="vote(4306, 'degissin', this)">🔄 Değişsin</button>
+        <input class="note" type="text" placeholder="Kısa yorum yaz..." oninput="saveNote(4306, this.value)" id="note-4306"/>
+      </div>
+    </div>
+    <div class="card" data-nat="kuzey" data-id="4307" data-name="Bechelarenli Rüdiger">
+      <div class="top">
+        <img src="portre/4307_bechelarenli_rudiger.webp" loading="lazy" class="port" alt="Bechelarenli Rüdiger"/>
+        <div class="meta">
+          <div class="row1">
+            <span class="badge" style="background:#4ea1f522;color:#4ea1f5;border:1px solid #4ea1f555">NADİR</span>
+            <span class="pill">Viking (Eski Norsça)</span>
+            <span class="pill">Erkek · Destek</span>
+            <span class="pill hz">136 Hz · 4.3 sn</span>
+          </div>
+          <h3>#21 · Bechelarenli Rüdiger <span class="cid">(4307)</span></h3>
+          <div class="actor">Ses: <b>Daniel DE</b> · Silah: <b>Armağan Kılıcı</b></div>
+        </div>
+      </div>
+      <div class="quote">Tryggð mín ok sæmd eru sterkari en dauðinn sjálfr.</div>
+      <div class="phon">Okunuş: <i>Triggd min ok semd eru sterkari en daudinn syalvr.</i></div>
+      <div class="tr">Türkçe: “Sadakatim ve onurum, ölümün kendisinden bile daha güçlüdür.”</div>
+      <audio controls preload="none" playsinline src="ses/4307_bechelarenli_rudiger.mp3" data-idx="20"></audio>
+      <div class="fb-row">
+        <button class="vbtn ok" onclick="vote(4307, 'iyi', this)">👍 Oldu</button>
+        <button class="vbtn rev" onclick="vote(4307, 'degissin', this)">🔄 Değişsin</button>
+        <input class="note" type="text" placeholder="Kısa yorum yaz..." oninput="saveNote(4307, this.value)" id="note-4307"/>
+      </div>
+    </div>
+    <div class="card" data-nat="mogol" data-id="4401" data-name="Cengiz Han">
+      <div class="top">
+        <img src="portre/4401_cengiz_han.webp" loading="lazy" class="port" alt="Cengiz Han"/>
+        <div class="meta">
+          <div class="row1">
+            <span class="badge" style="background:#e6a93822;color:#e6a938;border:1px solid #e6a93855">EFSANE</span>
+            <span class="pill">Moğol</span>
+            <span class="pill">Erkek · Lider</span>
+            <span class="pill hz">205 Hz · 4.1 sn</span>
+          </div>
+          <h3>#22 · Cengiz Han <span class="cid">(4401)</span></h3>
+          <div class="actor">Ses: <b>Curt</b> · Silah: <b>Ak Tuğ Mızrağı</b></div>
+        </div>
+      </div>
+      <div class="quote">Мөнх тэнгэрийн хүчин дор нэгэн жолоонд нэгдэгтүн!</div>
+      <div class="phon">Okunuş: <i>Mönh tengeriin hüçin dor negen joloond negdegtün!</i></div>
+      <div class="tr">Türkçe: “Sonsuz Mavi Gök'ün gücü altında tek bir dizginde birleşin!”</div>
+      <audio controls preload="none" playsinline src="ses/4401_cengiz_han.mp3" data-idx="21"></audio>
+      <div class="fb-row">
+        <button class="vbtn ok" onclick="vote(4401, 'iyi', this)">👍 Oldu</button>
+        <button class="vbtn rev" onclick="vote(4401, 'degissin', this)">🔄 Değişsin</button>
+        <input class="note" type="text" placeholder="Kısa yorum yaz..." oninput="saveNote(4401, this.value)" id="note-4401"/>
+      </div>
+    </div>
+    <div class="card" data-nat="mogol" data-id="4402" data-name="Alan Gua">
+      <div class="top">
+        <img src="portre/4402_alan_gua.webp" loading="lazy" class="port" alt="Alan Gua"/>
+        <div class="meta">
+          <div class="row1">
+            <span class="badge" style="background:#e6a93822;color:#e6a938;border:1px solid #e6a93855">EFSANE</span>
+            <span class="pill">Moğol</span>
+            <span class="pill">Kadın · Stratejist</span>
+            <span class="pill hz">222 Hz · 4.3 sn</span>
+          </div>
+          <h3>#23 · Alan Gua <span class="cid">(4402)</span></h3>
+          <div class="actor">Ses: <b>Deniz</b> · Silah: <b>Ok Demeti</b></div>
+        </div>
+      </div>
+      <div class="quote">Ганц сум хэврэг, багцалсан таван сум хугаршгүй.</div>
+      <div class="phon">Okunuş: <i>Gants sum hevreg, bagtsalsan tavan sum hugarşgüy.</i></div>
+      <div class="tr">Türkçe: “Tek ok kırılgandır; birbirine kenetlenmiş beş ok ise asla kırılmaz.”</div>
+      <audio controls preload="none" playsinline src="ses/4402_alan_gua.mp3" data-idx="22"></audio>
+      <div class="fb-row">
+        <button class="vbtn ok" onclick="vote(4402, 'iyi', this)">👍 Oldu</button>
+        <button class="vbtn rev" onclick="vote(4402, 'degissin', this)">🔄 Değişsin</button>
+        <input class="note" type="text" placeholder="Kısa yorum yaz..." oninput="saveNote(4402, this.value)" id="note-4402"/>
+      </div>
+    </div>
+    <div class="card" data-nat="mogol" data-id="4403" data-name="Subutay">
+      <div class="top">
+        <img src="portre/4403_subutay.webp" loading="lazy" class="port" alt="Subutay"/>
+        <div class="meta">
+          <div class="row1">
+            <span class="badge" style="background:#a86bf222;color:#a86bf2;border:1px solid #a86bf255">DESTANSI</span>
+            <span class="pill">Moğol</span>
+            <span class="pill">Erkek · Stratejist</span>
+            <span class="pill hz">139 Hz · 4.6 sn</span>
+          </div>
+          <h3>#24 · Subutay <span class="cid">(4403)</span></h3>
+          <div class="actor">Ses: <b>Bill</b> · Silah: <b>Kalka Mızrağı</b></div>
+        </div>
+      </div>
+      <div class="quote">Дайсныг сэлмээр бус, алсын бодлогоор бүслэн дардаг.</div>
+      <div class="phon">Okunuş: <i>Daysniig selmeer bus, alsiin bodlogoor büslen dardag.</i></div>
+      <div class="tr">Türkçe: “Düşman yalnız kılıçla değil, uzağı gören akılla kuşatılıp yenilir.”</div>
+      <audio controls preload="none" playsinline src="ses/4403_subutay.mp3" data-idx="23"></audio>
+      <div class="fb-row">
+        <button class="vbtn ok" onclick="vote(4403, 'iyi', this)">👍 Oldu</button>
+        <button class="vbtn rev" onclick="vote(4403, 'degissin', this)">🔄 Değişsin</button>
+        <input class="note" type="text" placeholder="Kısa yorum yaz..." oninput="saveNote(4403, this.value)" id="note-4403"/>
+      </div>
+    </div>
+    <div class="card" data-nat="mogol" data-id="4404" data-name="Batu Han">
+      <div class="top">
+        <img src="portre/4404_batu_han.webp" loading="lazy" class="port" alt="Batu Han"/>
+        <div class="meta">
+          <div class="row1">
+            <span class="badge" style="background:#a86bf222;color:#a86bf2;border:1px solid #a86bf255">DESTANSI</span>
+            <span class="pill">Moğol</span>
+            <span class="pill">Erkek · Lider</span>
+            <span class="pill hz">192 Hz · 3.8 sn</span>
+          </div>
+          <h3>#25 · Batu Han <span class="cid">(4404)</span></h3>
+          <div class="actor">Ses: <b>Arthur</b> · Silah: <b>Mohi Mızrağı</b></div>
+        </div>
+      </div>
+      <div class="quote">Алтан ордны сүр хүч их мөрөн мэт тасралтгүй урсана.</div>
+      <div class="phon">Okunuş: <i>Altan ordnii sür hüç ih mörön met tasraltgüy ursana.</i></div>
+      <div class="tr">Türkçe: “Altın Orda'nın kudreti, ulu bir nehir gibi durmaksızın akar.”</div>
+      <audio controls preload="none" playsinline src="ses/4404_batu_han.mp3" data-idx="24"></audio>
+      <div class="fb-row">
+        <button class="vbtn ok" onclick="vote(4404, 'iyi', this)">👍 Oldu</button>
+        <button class="vbtn rev" onclick="vote(4404, 'degissin', this)">🔄 Değişsin</button>
+        <input class="note" type="text" placeholder="Kısa yorum yaz..." oninput="saveNote(4404, this.value)" id="note-4404"/>
+      </div>
+    </div>
+    <div class="card" data-nat="mogol" data-id="4405" data-name="Camuka">
+      <div class="top">
+        <img src="portre/4405_camuka.webp" loading="lazy" class="port" alt="Camuka"/>
+        <div class="meta">
+          <div class="row1">
+            <span class="badge" style="background:#a86bf222;color:#a86bf2;border:1px solid #a86bf255">DESTANSI</span>
+            <span class="pill">Moğol</span>
+            <span class="pill">Erkek · Savaşçı</span>
+            <span class="pill hz">213 Hz · 3.5 sn</span>
+          </div>
+          <h3>#26 · Camuka <span class="cid">(4405)</span></h3>
+          <div class="actor">Ses: <b>Carter D</b> · Silah: <b>Islıklı Ok</b></div>
+        </div>
+      </div>
+      <div class="quote">Тэнгэрт хоёр нар үгүй ч, нөхөрлөлийн тангараг мөнх.</div>
+      <div class="phon">Okunuş: <i>Tengert hoyor nar ügüy ç, nöhörlöliin tangarag mönh.</i></div>
+      <div class="tr">Türkçe: “Gökte iki güneş olmasa da, kan kardeşliği yemini ebedîdir.”</div>
+      <audio controls preload="none" playsinline src="ses/4405_camuka.mp3" data-idx="25"></audio>
+      <div class="fb-row">
+        <button class="vbtn ok" onclick="vote(4405, 'iyi', this)">👍 Oldu</button>
+        <button class="vbtn rev" onclick="vote(4405, 'degissin', this)">🔄 Değişsin</button>
+        <input class="note" type="text" placeholder="Kısa yorum yaz..." oninput="saveNote(4405, this.value)" id="note-4405"/>
+      </div>
+    </div>
+    <div class="card" data-nat="mogol" data-id="4406" data-name="Cebe">
+      <div class="top">
+        <img src="portre/4406_cebe.webp" loading="lazy" class="port" alt="Cebe"/>
+        <div class="meta">
+          <div class="row1">
+            <span class="badge" style="background:#4ea1f522;color:#4ea1f5;border:1px solid #4ea1f555">NADİR</span>
+            <span class="pill">Moğol</span>
+            <span class="pill">Erkek · Savaşçı</span>
+            <span class="pill hz">190 Hz · 2.9 sn</span>
+          </div>
+          <h3>#27 · Cebe <span class="cid">(4406)</span></h3>
+          <div class="actor">Ses: <b>David</b> · Silah: <b>Kula Vuran Ok</b></div>
+        </div>
+      </div>
+      <div class="quote">Үнэн үг мэргэн сумнаас ч хурц тусдаг.</div>
+      <div class="phon">Okunuş: <i>Ünen üg mergen sumnaas ç hurts tusdag.</i></div>
+      <div class="tr">Türkçe: “Doğru söylenen söz, en keskin oktan bile daha derine işler.”</div>
+      <audio controls preload="none" playsinline src="ses/4406_cebe.mp3" data-idx="26"></audio>
+      <div class="fb-row">
+        <button class="vbtn ok" onclick="vote(4406, 'iyi', this)">👍 Oldu</button>
+        <button class="vbtn rev" onclick="vote(4406, 'degissin', this)">🔄 Değişsin</button>
+        <input class="note" type="text" placeholder="Kısa yorum yaz..." oninput="saveNote(4406, this.value)" id="note-4406"/>
+      </div>
+    </div>
+    <div class="card" data-nat="mogol" data-id="4407" data-name="Börte">
+      <div class="top">
+        <img src="portre/4407_borte.webp" loading="lazy" class="port" alt="Börte"/>
+        <div class="meta">
+          <div class="row1">
+            <span class="badge" style="background:#4ea1f522;color:#4ea1f5;border:1px solid #4ea1f555">NADİR</span>
+            <span class="pill">Moğol</span>
+            <span class="pill">Kadın · Destek</span>
+            <span class="pill hz">229 Hz · 3.6 sn</span>
+          </div>
+          <h3>#28 · Börte <span class="cid">(4407)</span></h3>
+          <div class="actor">Ses: <b>Fili</b> · Silah: <b>Konggirat Yayı</b></div>
+        </div>
+      </div>
+      <div class="quote">Өргөө гэрийн голомт бат бол их улс ганхашгүй.</div>
+      <div class="phon">Okunuş: <i>Örgöö geriin golomt bat bol ih uls ganhaşgüy.</i></div>
+      <div class="tr">Türkçe: “Otağın ocağı sağlam durursa, ulu devlet asla sarsılmaz.”</div>
+      <audio controls preload="none" playsinline src="ses/4407_borte.mp3" data-idx="27"></audio>
+      <div class="fb-row">
+        <button class="vbtn ok" onclick="vote(4407, 'iyi', this)">👍 Oldu</button>
+        <button class="vbtn rev" onclick="vote(4407, 'degissin', this)">🔄 Değişsin</button>
+        <input class="note" type="text" placeholder="Kısa yorum yaz..." oninput="saveNote(4407, this.value)" id="note-4407"/>
+      </div>
+    </div>
+    <div class="card" data-nat="misir" data-id="4501" data-name="Horus">
+      <div class="top">
+        <img src="portre/4501_horus.webp" loading="lazy" class="port" alt="Horus"/>
+        <div class="meta">
+          <div class="row1">
+            <span class="badge" style="background:#e6a93822;color:#e6a938;border:1px solid #e6a93855">EFSANE</span>
+            <span class="pill">Antik Mısır</span>
+            <span class="pill">Erkek · Savaşçı</span>
+            <span class="pill hz">107 Hz · 4.2 sn</span>
+          </div>
+          <h3>#29 · Horus <span class="cid">(4501)</span></h3>
+          <div class="actor">Ses: <b>Kadir Kayışcı</b> · Silah: <b>Edfu Zıpkını</b></div>
+        </div>
+      </div>
+      <div class="quote">Iu Ma'at men-ti, isfet sekher-ti kher dja-i!</div>
+      <div class="phon">Okunuş: <i>İu Ma-at men-ti, isfet seher-ti her ca-i!</i></div>
+      <div class="tr">Türkçe: “Hakikat ve düzen baki kalır; kaos ise zıpkınımın altında devrilir!”</div>
+      <audio controls preload="none" playsinline src="ses/4501_horus.mp3" data-idx="28"></audio>
+      <div class="fb-row">
+        <button class="vbtn ok" onclick="vote(4501, 'iyi', this)">👍 Oldu</button>
+        <button class="vbtn rev" onclick="vote(4501, 'degissin', this)">🔄 Değişsin</button>
+        <input class="note" type="text" placeholder="Kısa yorum yaz..." oninput="saveNote(4501, this.value)" id="note-4501"/>
+      </div>
+    </div>
+    <div class="card" data-nat="misir" data-id="4502" data-name="II. Ramses">
+      <div class="top">
+        <img src="portre/4502_ii_ramses.webp" loading="lazy" class="port" alt="II. Ramses"/>
+        <div class="meta">
+          <div class="row1">
+            <span class="badge" style="background:#e6a93822;color:#e6a938;border:1px solid #e6a93855">EFSANE</span>
+            <span class="pill">Antik Mısır</span>
+            <span class="pill">Erkek · Savaşçı</span>
+            <span class="pill hz">122 Hz · 4.5 sn</span>
+          </div>
+          <h3>#30 · II. Ramses <span class="cid">(4502)</span></h3>
+          <div class="actor">Ses: <b>Cem</b> · Silah: <b>Kadeş Hopeşi</b></div>
+        </div>
+      </div>
+      <div class="quote">Anok nesu nakht; ib-i em bi-a, khepesh-i user!</div>
+      <div class="phon">Okunuş: <i>Anok nesu naht; ib-i em bi-a, hepeş-i user!</i></div>
+      <div class="tr">Türkçe: “Ben kudretli hükümdarım; yüreğim tunçtan, hopeşim yenilmezdir!”</div>
+      <audio controls preload="none" playsinline src="ses/4502_ii_ramses.mp3" data-idx="29"></audio>
+      <div class="fb-row">
+        <button class="vbtn ok" onclick="vote(4502, 'iyi', this)">👍 Oldu</button>
+        <button class="vbtn rev" onclick="vote(4502, 'degissin', this)">🔄 Değişsin</button>
+        <input class="note" type="text" placeholder="Kısa yorum yaz..." oninput="saveNote(4502, this.value)" id="note-4502"/>
+      </div>
+    </div>
+    <div class="card" data-nat="misir" data-id="4503" data-name="III. Tutmosis">
+      <div class="top">
+        <img src="portre/4503_iii_tutmosis.webp" loading="lazy" class="port" alt="III. Tutmosis"/>
+        <div class="meta">
+          <div class="row1">
+            <span class="badge" style="background:#a86bf222;color:#a86bf2;border:1px solid #a86bf255">DESTANSI</span>
+            <span class="pill">Antik Mısır</span>
+            <span class="pill">Erkek · Stratejist</span>
+            <span class="pill hz">186 Hz · 3.5 sn</span>
+          </div>
+          <h3>#31 · III. Tutmosis <span class="cid">(4503)</span></h3>
+          <div class="actor">Ses: <b>Doga</b> · Silah: <b>Aruna Yayı</b></div>
+        </div>
+      </div>
+      <div class="quote">Shem-en her wawat khensut; qenyt enef heqa!</div>
+      <div class="phon">Okunuş: <i>Şem-en her vavat hensut; kenit enef heka!</i></div>
+      <div class="tr">Türkçe: “Dar geçitten yürüyen, zaferi hak eder; cesaret hükümdarın yoludur!”</div>
+      <audio controls preload="none" playsinline src="ses/4503_iii_tutmosis.mp3" data-idx="30"></audio>
+      <div class="fb-row">
+        <button class="vbtn ok" onclick="vote(4503, 'iyi', this)">👍 Oldu</button>
+        <button class="vbtn rev" onclick="vote(4503, 'degissin', this)">🔄 Değişsin</button>
+        <input class="note" type="text" placeholder="Kısa yorum yaz..." oninput="saveNote(4503, this.value)" id="note-4503"/>
+      </div>
+    </div>
+    <div class="card" data-nat="misir" data-id="4504" data-name="Hatşepsut">
+      <div class="top">
+        <img src="portre/4504_hatsepsut.webp" loading="lazy" class="port" alt="Hatşepsut"/>
+        <div class="meta">
+          <div class="row1">
+            <span class="badge" style="background:#a86bf222;color:#a86bf2;border:1px solid #a86bf255">DESTANSI</span>
+            <span class="pill">Antik Mısır</span>
+            <span class="pill">Kadın · Lider</span>
+            <span class="pill hz">209 Hz · 4.7 sn</span>
+          </div>
+          <h3>#32 · Hatşepsut <span class="cid">(4504)</span></h3>
+          <div class="actor">Ses: <b>Alice</b> · Silah: <b>Punt Asası</b></div>
+        </div>
+      </div>
+      <div class="quote">Seper-en Kemet em hetep, sedjefa-en ta-wy em antu!</div>
+      <div class="phon">Okunuş: <i>Seper-en Kemet em hetep, secfa-en ta-vi em antu!</i></div>
+      <div class="tr">Türkçe: “İki Ülke'yi barış ve bereketle ihya eder, mür kokularıyla zenginleştiririz!”</div>
+      <audio controls preload="none" playsinline src="ses/4504_hatsepsut.mp3" data-idx="31"></audio>
+      <div class="fb-row">
+        <button class="vbtn ok" onclick="vote(4504, 'iyi', this)">👍 Oldu</button>
+        <button class="vbtn rev" onclick="vote(4504, 'degissin', this)">🔄 Değişsin</button>
+        <input class="note" type="text" placeholder="Kısa yorum yaz..." oninput="saveNote(4504, this.value)" id="note-4504"/>
+      </div>
+    </div>
+    <div class="card" data-nat="misir" data-id="4505" data-name="Ahhotep">
+      <div class="top">
+        <img src="portre/4505_ahhotep.webp" loading="lazy" class="port" alt="Ahhotep"/>
+        <div class="meta">
+          <div class="row1">
+            <span class="badge" style="background:#a86bf222;color:#a86bf2;border:1px solid #a86bf255">DESTANSI</span>
+            <span class="pill">Antik Mısır</span>
+            <span class="pill">Kadın · Destek</span>
+            <span class="pill hz">229 Hz · 4.2 sn</span>
+          </div>
+          <h3>#33 · Ahhotep <span class="cid">(4505)</span></h3>
+          <div class="actor">Ses: <b>Tomris</b> · Silah: <b>Ahhotep'in Baltası</b></div>
+        </div>
+      </div>
+      <div class="quote">Anok saq-et mesha, khenemet Kemet em kheru qesn!</div>
+      <div class="phon">Okunuş: <i>Anok sak-et meşa, henemet Kemet em heru kesen!</i></div>
+      <div class="tr">Türkçe: “Zor günde orduyu derleyen, Mısır'ı koruyup birleştiren benim!”</div>
+      <audio controls preload="none" playsinline src="ses/4505_ahhotep.mp3" data-idx="32"></audio>
+      <div class="fb-row">
+        <button class="vbtn ok" onclick="vote(4505, 'iyi', this)">👍 Oldu</button>
+        <button class="vbtn rev" onclick="vote(4505, 'degissin', this)">🔄 Değişsin</button>
+        <input class="note" type="text" placeholder="Kısa yorum yaz..." oninput="saveNote(4505, this.value)" id="note-4505"/>
+      </div>
+    </div>
+    <div class="card" data-nat="misir" data-id="4506" data-name="Cehuti">
+      <div class="top">
+        <img src="portre/4506_cehuti.webp" loading="lazy" class="port" alt="Cehuti"/>
+        <div class="meta">
+          <div class="row1">
+            <span class="badge" style="background:#4ea1f522;color:#4ea1f5;border:1px solid #4ea1f555">NADİR</span>
+            <span class="pill">Antik Mısır</span>
+            <span class="pill">Erkek · Stratejist</span>
+            <span class="pill hz">105 Hz · 4.5 sn</span>
+          </div>
+          <h3>#34 · Cehuti <span class="cid">(4506)</span></h3>
+          <div class="actor">Ses: <b>Celil</b> · Silah: <b>Menheperre Asası</b></div>
+        </div>
+      </div>
+      <div class="quote">Saa user er khepesh; sebaq ib sekher sebekhet!</div>
+      <div class="phon">Okunuş: <i>Saa user er hepeş; sebak ib seher sebehet!</i></div>
+      <div class="tr">Türkçe: “Kurnaz akıl kılıçtan üstündür; parlak zekâ kapalı kapıları düşürür!”</div>
+      <audio controls preload="none" playsinline src="ses/4506_cehuti.mp3" data-idx="33"></audio>
+      <div class="fb-row">
+        <button class="vbtn ok" onclick="vote(4506, 'iyi', this)">👍 Oldu</button>
+        <button class="vbtn rev" onclick="vote(4506, 'degissin', this)">🔄 Değişsin</button>
+        <input class="note" type="text" placeholder="Kısa yorum yaz..." oninput="saveNote(4506, this.value)" id="note-4506"/>
+      </div>
+    </div>
+    <div class="card" data-nat="misir" data-id="4507" data-name="Ebana oğlu Ahmose">
+      <div class="top">
+        <img src="portre/4507_ebana_oglu_ahmose.webp" loading="lazy" class="port" alt="Ebana oğlu Ahmose"/>
+        <div class="meta">
+          <div class="row1">
+            <span class="badge" style="background:#4ea1f522;color:#4ea1f5;border:1px solid #4ea1f555">NADİR</span>
+            <span class="pill">Antik Mısır</span>
+            <span class="pill">Erkek · Savaşçı</span>
+            <span class="pill hz">137 Hz · 3.9 sn</span>
+          </div>
+          <h3>#35 · Ebana oğlu Ahmose <span class="cid">(4507)</span></h3>
+          <div class="actor">Ses: <b>Will</b> · Silah: <b>Yaban Boğası Mızrağı</b></div>
+        </div>
+      </div>
+      <div class="quote">Nub en qenyt en pefy aha her mw hna ta!</div>
+      <div class="phon">Okunuş: <i>Nub en kenit en pefi aha her mu hna ta!</i></div>
+      <div class="tr">Türkçe: “Yiğitlik altını, hem suda hem karada geri dönmeden çarpışanındır!”</div>
+      <audio controls preload="none" playsinline src="ses/4507_ebana_oglu_ahmose.mp3" data-idx="34"></audio>
+      <div class="fb-row">
+        <button class="vbtn ok" onclick="vote(4507, 'iyi', this)">👍 Oldu</button>
+        <button class="vbtn rev" onclick="vote(4507, 'degissin', this)">🔄 Değişsin</button>
+        <input class="note" type="text" placeholder="Kısa yorum yaz..." oninput="saveNote(4507, this.value)" id="note-4507"/>
+      </div>
+    </div>
+    <div class="card" data-nat="arap" data-id="4601" data-name="Antere bin Şeddad">
+      <div class="top">
+        <img src="portre/4601_antere_bin_seddad.webp" loading="lazy" class="port" alt="Antere bin Şeddad"/>
+        <div class="meta">
+          <div class="row1">
+            <span class="badge" style="background:#e6a93822;color:#e6a938;border:1px solid #e6a93855">EFSANE</span>
+            <span class="pill">Arap (Fasih Arapça)</span>
+            <span class="pill">Erkek · Savaşçı</span>
+            <span class="pill hz">147 Hz · 6.0 sn</span>
+          </div>
+          <h3>#36 · Antere bin Şeddad <span class="cid">(4601)</span></h3>
+          <div class="actor">Ses: <b>Omar</b> · Silah: <b>Zâmî</b></div>
+        </div>
+      </div>
+      <div class="quote">لَا تَسْقِنِي مَاءَ الْحَيَاةِ بِذِلَّةٍ، بَلْ فَاسْقِنِي بِالْعِزِّ كَأْسَ الْحَنْظَلِ!</div>
+      <div class="phon">Okunuş: <i>Lâ teskınî mâ'el-hayâti bi-zilletin, bel feskınî bi'l-izzi ke'se'l-hanzali!</i></div>
+      <div class="tr">Türkçe: “Bana zilletle ab-ı hayat içirme; izzet ve onurla acı Ebucehil karpuzu kadehi sun!”</div>
+      <audio controls preload="none" playsinline src="ses/4601_antere_bin_seddad.mp3" data-idx="35"></audio>
+      <div class="fb-row">
+        <button class="vbtn ok" onclick="vote(4601, 'iyi', this)">👍 Oldu</button>
+        <button class="vbtn rev" onclick="vote(4601, 'degissin', this)">🔄 Değişsin</button>
+        <input class="note" type="text" placeholder="Kısa yorum yaz..." oninput="saveNote(4601, this.value)" id="note-4601"/>
+      </div>
+    </div>
+    <div class="card" data-nat="arap" data-id="4602" data-name="Zenobia">
+      <div class="top">
+        <img src="portre/4602_zenobia.webp" loading="lazy" class="port" alt="Zenobia"/>
+        <div class="meta">
+          <div class="row1">
+            <span class="badge" style="background:#e6a93822;color:#e6a938;border:1px solid #e6a93855">EFSANE</span>
+            <span class="pill">Arap (Fasih Arapça)</span>
+            <span class="pill">Kadın · Lider</span>
+            <span class="pill hz">258 Hz · 5.6 sn</span>
+          </div>
+          <h3>#37 · Zenobia <span class="cid">(4602)</span></h3>
+          <div class="actor">Ses: <b>Lily</b> · Silah: <b>Tedmür Mızrağı</b></div>
+        </div>
+      </div>
+      <div class="quote">أَنَا ابْنَةُ الصَّحْرَاءِ وَالتَّاجِ؛ نَمُوتُ أَحْرَارًا وَلَا نَحْنِي الرُّؤُوسَ!</div>
+      <div class="phon">Okunuş: <i>Ene'bnetu's-sahrâi ve't-tâc; nemûtu ahrâran ve lâ nahnî'r-ruûs!</i></div>
+      <div class="tr">Türkçe: “Ben çölün ve tacın kızıyım; hür ölürüz, baş eğmeyiz!”</div>
+      <audio controls preload="none" playsinline src="ses/4602_zenobia.mp3" data-idx="36"></audio>
+      <div class="fb-row">
+        <button class="vbtn ok" onclick="vote(4602, 'iyi', this)">👍 Oldu</button>
+        <button class="vbtn rev" onclick="vote(4602, 'degissin', this)">🔄 Değişsin</button>
+        <input class="note" type="text" placeholder="Kısa yorum yaz..." oninput="saveNote(4602, this.value)" id="note-4602"/>
+      </div>
+    </div>
+    <div class="card" data-nat="arap" data-id="4603" data-name="Zerka'ül-Yemame">
+      <div class="top">
+        <img src="portre/4603_zerkaul_yemame.webp" loading="lazy" class="port" alt="Zerka'ül-Yemame"/>
+        <div class="meta">
+          <div class="row1">
+            <span class="badge" style="background:#a86bf222;color:#a86bf2;border:1px solid #a86bf255">DESTANSI</span>
+            <span class="pill">Arap (Fasih Arapça)</span>
+            <span class="pill">Kadın · Stratejist</span>
+            <span class="pill hz">213 Hz · 4.5 sn</span>
+          </div>
+          <h3>#38 · Zerka'ül-Yemame <span class="cid">(4603)</span></h3>
+          <div class="actor">Ses: <b>Ceren</b> · Silah: <b>Gözcü Yayı</b></div>
+        </div>
+      </div>
+      <div class="quote">عَيْنُ الْبَصِيرَةِ تَرَى الْغَائِبَ قَبْلَ أَنْ يَثُورَ الْغُبَارُ.</div>
+      <div class="phon">Okunuş: <i>Aynu'l-basîreti terâ'l-ğâibe kable en yesûre'l-ğubâr.</i></div>
+      <div class="tr">Türkçe: “Basiret gözü, daha ufukta toz kalkmadan yaklaşanı görür.”</div>
+      <audio controls preload="none" playsinline src="ses/4603_zerkaul_yemame.mp3" data-idx="37"></audio>
+      <div class="fb-row">
+        <button class="vbtn ok" onclick="vote(4603, 'iyi', this)">👍 Oldu</button>
+        <button class="vbtn rev" onclick="vote(4603, 'degissin', this)">🔄 Değişsin</button>
+        <input class="note" type="text" placeholder="Kısa yorum yaz..." oninput="saveNote(4603, this.value)" id="note-4603"/>
+      </div>
+    </div>
+    <div class="card" data-nat="arap" data-id="4604" data-name="Zîr Sâlim">
+      <div class="top">
+        <img src="portre/4604_zir_salim.webp" loading="lazy" class="port" alt="Zîr Sâlim"/>
+        <div class="meta">
+          <div class="row1">
+            <span class="badge" style="background:#a86bf222;color:#a86bf2;border:1px solid #a86bf255">DESTANSI</span>
+            <span class="pill">Arap (Fasih Arapça)</span>
+            <span class="pill">Erkek · Savaşçı</span>
+            <span class="pill hz">155 Hz · 4.8 sn</span>
+          </div>
+          <h3>#39 · Zîr Sâlim <span class="cid">(4604)</span></h3>
+          <div class="actor">Ses: <b>Yunus</b> · Silah: <b>Kuleyb'in Kılıcı</b></div>
+        </div>
+      </div>
+      <div class="quote">الْعَهْدُ دَيْنٌ فِي الْعُنُقِ، لَا يَقْضِيهِ إِلَّا حَدُّ الْحُسَامِ!</div>
+      <div class="phon">Okunuş: <i>El-ahdu deynun fî'l-unuki, lâ yakdîhi illâ haddu'l-husâm!</i></div>
+      <div class="tr">Türkçe: “Verilen söz boyunda borçtur; onu ancak keskin kılıcın ağzı öder!”</div>
+      <audio controls preload="none" playsinline src="ses/4604_zir_salim.mp3" data-idx="38"></audio>
+      <div class="fb-row">
+        <button class="vbtn ok" onclick="vote(4604, 'iyi', this)">👍 Oldu</button>
+        <button class="vbtn rev" onclick="vote(4604, 'degissin', this)">🔄 Değişsin</button>
+        <input class="note" type="text" placeholder="Kısa yorum yaz..." oninput="saveNote(4604, this.value)" id="note-4604"/>
+      </div>
+    </div>
+    <div class="card" data-nat="arap" data-id="4605" data-name="İmruülkays">
+      <div class="top">
+        <img src="portre/4605_imruulkays.webp" loading="lazy" class="port" alt="İmruülkays"/>
+        <div class="meta">
+          <div class="row1">
+            <span class="badge" style="background:#a86bf222;color:#a86bf2;border:1px solid #a86bf255">DESTANSI</span>
+            <span class="pill">Arap (Fasih Arapça)</span>
+            <span class="pill">Erkek · Stratejist</span>
+            <span class="pill hz">182 Hz · 6.9 sn</span>
+          </div>
+          <h3>#40 · İmruülkays <span class="cid">(4605)</span></h3>
+          <div class="actor">Ses: <b>George</b> · Silah: <b>Kinde Kılıcı</b></div>
+        </div>
+      </div>
+      <div class="quote">مِكَرٍّ مِفَرٍّ مُقْبِلٍ مُدْبِرٍ مَعًا، كَجُلْمُودِ صَخْرٍ حَطَّهُ السَّيْلُ مِنْ عَلِ!</div>
+      <div class="phon">Okunuş: <i>Mikerrin miferrin mukbilin mudbirin ma'an, ke-culmûdi sahrin hattahu's-seylu min ali!</i></div>
+      <div class="tr">Türkçe: “Bir atılır bir döner, bir gelir bir gider; selin yüce dağdan kopardığı dev kaya gibi!”</div>
+      <audio controls preload="none" playsinline src="ses/4605_imruulkays.mp3" data-idx="39"></audio>
+      <div class="fb-row">
+        <button class="vbtn ok" onclick="vote(4605, 'iyi', this)">👍 Oldu</button>
+        <button class="vbtn rev" onclick="vote(4605, 'degissin', this)">🔄 Değişsin</button>
+        <input class="note" type="text" placeholder="Kısa yorum yaz..." oninput="saveNote(4605, this.value)" id="note-4605"/>
+      </div>
+    </div>
+    <div class="card" data-nat="arap" data-id="4606" data-name="Hâtem-i Tâî">
+      <div class="top">
+        <img src="portre/4606_hatem_i_tai.webp" loading="lazy" class="port" alt="Hâtem-i Tâî"/>
+        <div class="meta">
+          <div class="row1">
+            <span class="badge" style="background:#4ea1f522;color:#4ea1f5;border:1px solid #4ea1f555">NADİR</span>
+            <span class="pill">Arap (Fasih Arapça)</span>
+            <span class="pill">Erkek · Destek</span>
+            <span class="pill hz">155 Hz · 6.3 sn</span>
+          </div>
+          <h3>#41 · Hâtem-i Tâî <span class="cid">(4606)</span></h3>
+          <div class="actor">Ses: <b>Eric</b> · Silah: <b>Tayy Mızrağı</b></div>
+        </div>
+      </div>
+      <div class="quote">أَوْقِدْ فَإِنَّ اللَّيْلَ لَيْلٌ قَرُّ؛ يَفْنَى الْمَالُ وَيَبْقَى الثَّنَاءُ وَالذِّكْرُ!</div>
+      <div class="phon">Okunuş: <i>Evkıd fe-inne'l-leyle leylun karru; yefnâ'l-mâlu ve yebkâ's-senâu ve'z-zikru!</i></div>
+      <div class="tr">Türkçe: “Ateşi gür yak ki gece ayazdır; mal tükenir, geriye yalnız iyilik ve güzel nam kalır!”</div>
+      <audio controls preload="none" playsinline src="ses/4606_hatem_i_tai.mp3" data-idx="40"></audio>
+      <div class="fb-row">
+        <button class="vbtn ok" onclick="vote(4606, 'iyi', this)">👍 Oldu</button>
+        <button class="vbtn rev" onclick="vote(4606, 'degissin', this)">🔄 Değişsin</button>
+        <input class="note" type="text" placeholder="Kısa yorum yaz..." oninput="saveNote(4606, this.value)" id="note-4606"/>
+      </div>
+    </div>
+    <div class="card" data-nat="arap" data-id="4607" data-name="Sindbad">
+      <div class="top">
+        <img src="portre/4607_sindbad.webp" loading="lazy" class="port" alt="Sindbad"/>
+        <div class="meta">
+          <div class="row1">
+            <span class="badge" style="background:#4ea1f522;color:#4ea1f5;border:1px solid #4ea1f555">NADİR</span>
+            <span class="pill">Arap (Fasih Arapça)</span>
+            <span class="pill">Erkek · Dengeli</span>
+            <span class="pill hz">132 Hz · 5.2 sn</span>
+          </div>
+          <h3>#42 · Sindbad <span class="cid">(4607)</span></h3>
+          <div class="actor">Ses: <b>Chris</b> · Silah: <b>Roh Tüyü Hançeri</b></div>
+        </div>
+      </div>
+      <div class="quote">مَنْ خَافَ الْأَمْوَاجَ بَقِيَ فِي الْمِينَاءِ، وَمَنْ رَكِبَ الْبَحْرَ نَالَ الدُّرَرَ!</div>
+      <div class="phon">Okunuş: <i>Men hâfe'l-emvâce bekıye fî'l-mînâi, ve men rekibe'l-bahre nâle'd-durer!</i></div>
+      <div class="tr">Türkçe: “Dalgalardan korkan limanda kalır; denize açılan ise incilere kavuşur!”</div>
+      <audio controls preload="none" playsinline src="ses/4607_sindbad.mp3" data-idx="41"></audio>
+      <div class="fb-row">
+        <button class="vbtn ok" onclick="vote(4607, 'iyi', this)">👍 Oldu</button>
+        <button class="vbtn rev" onclick="vote(4607, 'degissin', this)">🔄 Değişsin</button>
+        <input class="note" type="text" placeholder="Kısa yorum yaz..." oninput="saveNote(4607, this.value)" id="note-4607"/>
+      </div>
+    </div></div>
+</div>
+<div class="toast" id="toast">Yorum özeti kopyalandı!</div>
+<script>
+const KEY = 'mf_ses_yorum_v1';
+let state = JSON.parse(localStorage.getItem(KEY) || '{}');
+let seqMode = false;
+
+function syncUI() {
+  document.querySelectorAll('.card').forEach(c => {
+    const id = c.dataset.id;
+    const st = state[id] || {};
+    c.querySelector('.vbtn.ok').classList.toggle('on', st.v === 'iyi');
+    c.querySelector('.vbtn.rev').classList.toggle('on', st.v === 'degissin');
+    const inp = document.getElementById('note-' + id);
+    if (inp && st.n) inp.value = st.n;
+  });
+}
+function save() { localStorage.setItem(KEY, JSON.stringify(state)); }
+function vote(id, v) {
+  state[id] = state[id] || {};
+  state[id].v = (state[id].v === v) ? '' : v;
+  save(); syncUI();
+}
+function saveNote(id, val) {
+  state[id] = state[id] || {};
+  state[id].n = val;
+  save();
+}
+
+const audios = Array.from(document.querySelectorAll('audio'));
+audios.forEach((a, idx) => {
+  a.addEventListener('play', () => {
+    audios.forEach(o => {
+      if (o !== a) o.pause();
+      o.closest('.card').classList.toggle('playing', o === a);
+    });
+  });
+  a.addEventListener('ended', () => {
+    a.closest('.card').classList.remove('playing');
+    if (!seqMode) return;
+    for (let j = idx + 1; j < audios.length; j++) {
+      if (audios[j].closest('.card').style.display !== 'none') {
+        audios[j].scrollIntoView({behavior:'smooth', block:'center'});
+        audios[j].play();
+        return;
+      }
+    }
+    seqMode = false;
+    document.getElementById('seqBtn').textContent = '▶ Sırayla Çal';
+  });
+});
+
+function toggleSeq() {
+  seqMode = !seqMode;
+  document.getElementById('seqBtn').textContent = seqMode ? '⏹ Sıralı Çalmayı Durdur' : '▶ Sırayla Çal';
+  if (seqMode) {
+    const first = audios.find(a => a.closest('.card').style.display !== 'none');
+    if (first) { first.scrollIntoView({behavior:'smooth', block:'center'}); first.play(); }
+  } else {
+    audios.forEach(a => a.pause());
+  }
+}
+
+function filt(n, btn) {
+  document.querySelectorAll('.tab').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.card').forEach(c => {
+    c.style.display = (n === 'all' || c.dataset.nat === n) ? 'flex' : 'none';
+  });
+}
+
+function copyFeedback() {
+  const lines = ['Mythfront Komutan Ses Yorumları:'];
+  document.querySelectorAll('.card').forEach(c => {
+    const id = c.dataset.id, nm = c.dataset.name, st = state[id];
+    if (st && (st.v || (st.n && st.n.trim()))) {
+      const tag = st.v === 'degissin' ? '🔄 DEĞİŞSİN' : st.v === 'iyi' ? '👍 OLDU' : '💬 NOT';
+      lines.push(`- ${id} ${nm}: ${tag}${st.n ? ' — ' + st.n.trim() : ''}`);
+    }
+  });
+  if (lines.length === 1) lines.push('(Henüz işaretlenen komutan yok)');
+  const txt = lines.join('\n');
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(txt).then(showToast);
+  } else {
+    prompt('Kopyala:', txt);
+  }
+}
+function showToast() {
+  const t = document.getElementById('toast');
+  t.style.display = 'block';
+  setTimeout(() => t.style.display = 'none', 2400);
+}
+syncUI();
+</script></body></html>
